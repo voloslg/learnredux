@@ -11,26 +11,33 @@
 // // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
 
+import { createStore } from "redux";
 
-import { createStore } from 'redux';
-
-function playlist(state = [], action) {
-  if (action.type === 'ADD_TRACK') {
-    return [
-      ...state,
-      action.payload
-    ]
+function playlist(store = [], action) {
+  if (action.type === "ADD_TRACK") {
+    return [...store, action.payload];
   }
-  return state;
-};
+  return store;
+}
+
+let trackInput = document.querySelectorAll(".trackInput")[0];
+let list = document.querySelectorAll(".list")[0];
 
 let store = createStore(playlist);
-// console.log(store.getState());
-
 store.subscribe(() => {
-  console.log('subscribe', store.getState());
+  console.log(store.getState());
+  list.innerHTML = "";
+  trackInput.value = "";
+  // console.log("subscribe", store.getState());
+  store.getState().forEach(track => {
+    let li = document.createElement("li");
+    li.innerText = track;
+    list.appendChild(li);
+  });
 });
 
-store.dispatch({ type: 'ADD_TRACK', payload: 'Smells like teen spirit' });
-store.dispatch({ type: 'ADD_TRACK', payload: 'Enter Sandman' });
-store.dispatch({ type: 'ADD_TRACK', payload: 'Toxic' });
+let addTrackClick = document.querySelectorAll(".addTrack")[0];
+addTrackClick.addEventListener("click", () => {
+  let trackName = trackInput.value;
+  store.dispatch({ type: "ADD_TRACK", payload: trackName });
+});
