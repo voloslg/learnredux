@@ -6,13 +6,25 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-const initialState = ["Smells like teen spirit", "Enter sandman"];
+const initialState = {
+  tracks: ["Smells like spirit", "Enter Sandman"],
+  playlists: ["My home playlist", "My work playlist"]
+};
 
-function playlist(store = initialState, action) {
+function playlist(state = initialState, action) {
   if (action.type === "ADD_TRACK") {
-    return [...store, action.payload];
+    return {
+      ...state,
+      tracks: [...state.tracks, action.payload]
+    };
+  } else if (action.type === "DELETE_TRACK") {
+    return state;
+  } else if (action.type === "ADD_PLAYLIST") {
+    return state;
+  } else if (action.type === "DELETE_PLAYLIST") {
+    return state;
   }
-  return store;
+  return state;
 }
 
 let store = createStore(playlist);

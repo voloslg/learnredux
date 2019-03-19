@@ -9,8 +9,6 @@ class App extends Component {
   };
 
   render() {
-    let { testStore } = this.props;
-    console.log(testStore);
     return (
       <div>
         <input
@@ -20,7 +18,7 @@ class App extends Component {
           }}
         />
         <button onClick={this.addTrack}>Add track</button>
-        {testStore.map((track, index) => (
+        {this.props.tracks.map((track, index) => (
           <li key={index}>{track}</li>
         ))}
       </div>
@@ -30,7 +28,7 @@ class App extends Component {
 
 export default connect(
   state => ({
-    testStore: state
+    tracks: state.tracks
   }),
   dispatch => ({
     onAddTrack: trackName => {
