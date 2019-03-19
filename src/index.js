@@ -6,28 +6,32 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-const initialState = {
-  tracks: ["Smells like spirit", "Enter Sandman"],
-  playlists: ["My home playlist", "My work playlist"]
-};
+import reducer from "./reducers";
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
-function playlist(state = initialState, action) {
-  if (action.type === "ADD_TRACK") {
-    return {
-      ...state,
-      tracks: [...state.tracks, action.payload]
-    };
-  } else if (action.type === "DELETE_TRACK") {
-    return state;
-  } else if (action.type === "ADD_PLAYLIST") {
-    return state;
-  } else if (action.type === "DELETE_PLAYLIST") {
-    return state;
-  }
-  return state;
-}
+// const initialState = {
+//   tracks: ["Smells like spirit", "Enter Sandman"],
+//   playlists: ["My home playlist", "My work playlist"]
+// };
 
-let store = createStore(playlist);
+// function playlist(state = initialState, action) {
+//   if (action.type === "ADD_TRACK") {
+//     return {
+//       ...state,
+//       tracks: [...state.tracks, action.payload]
+//     };
+//   } else if (action.type === "DELETE_TRACK") {
+//     return state;
+//   } else if (action.type === "ADD_PLAYLIST") {
+//     return state;
+//   } else if (action.type === "DELETE_PLAYLIST") {
+//     return state;
+//   }
+//   return state;
+// }
 
 ReactDOM.render(
   <Provider store={store}>
